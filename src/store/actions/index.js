@@ -1,0 +1,1 @@
+export { initRestaurants } from './restaurantFilter';

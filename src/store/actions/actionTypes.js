@@ -1,0 +1,1 @@
+export const INIT_RESTAURANTS = 'INIT_RESTAURANTS';
