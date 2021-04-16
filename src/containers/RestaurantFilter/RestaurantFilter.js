@@ -1,23 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import * as classes from './RestaurantFilter.module.css';
-import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import * as actions from '../../store/actions/index';
+import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 const RestaurantFilter = (props) => {
+	const [searchValue, setSearchValue] = useState('');
 	const onInitRestaurants = props.onInitRestaurants;
 	useEffect(() => {
 		onInitRestaurants();
 	}, [onInitRestaurants]);
 
+	const filteredByNameRestaurants = props.restaurants.filter((restaurant) => {
+		return restaurant.title.toLowerCase().includes(searchValue.toLowerCase());
+	});
+
 	const restaurantCards = props.restaurants
-		? props.restaurants.map((restaurant) => (
-				<RestaurantCard key={restaurant.id} title={restaurant.title} description={restaurant.description} />
+		? filteredByNameRestaurants.map((restaurant) => (
+				<RestaurantCard
+					key={restaurant._id}
+					title={restaurant.title}
+					description={restaurant.description}
+					rating={restaurant.rating}
+				/>
 		  ))
 		: null;
 
-	return <div className={classes.Restaurants}>{restaurantCards}</div>;
+	return (
+		<div>
+			<br />
+			<SearchBar value={searchValue} onChange={setSearchValue} />
+			<br />
+			<div className={classes.Restaurants}>{restaurantCards}</div>
+		</div>
+	);
 };
 
 const mapStateToProps = (state) => {

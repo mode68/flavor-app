@@ -1,1 +1,4 @@
 export const INIT_RESTAURANTS = 'INIT_RESTAURANTS';
+export const ADD_RESTAURANT = 'ADD_RESTAURANT';
+export const SET_ERROR = 'SET_ERROR';
+export const SET_RESTAURANTS = 'SET_RESTAURANTS';

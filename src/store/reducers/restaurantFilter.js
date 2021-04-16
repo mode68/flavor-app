@@ -2,28 +2,29 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
 	restaurants: null,
+	error: '',
 };
 
-const initRestaurants = (state, action) => {
-	const updatedRestaurants = [
-		{
-			id: 'id1',
-			title: 'Restaurant ICHI',
-			description: 'This is the first restaurant',
-		},
-		{
-			id: 'id2',
-			title: 'Restaurant NI',
-			description: 'This is the second restaurant',
-		},
-	];
-	return { restaurants: updatedRestaurants };
+const setError = (state, action) => {
+	return { ...state, error: action.payload };
+};
+
+const setRestaurants = (state, action) => {
+	return { ...state, restaurants: action.payload };
+};
+
+const addRestaurant = (state, action) => {
+	return { ...state, restaurants: [...state.restaurants, action.payload] };
 };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.INIT_RESTAURANTS:
-			return initRestaurants(state, action);
+		case actionTypes.SET_RESTAURANTS:
+			return setRestaurants(state, action);
+		case actionTypes.ADD_RESTAURANT:
+			return addRestaurant(state, action);
+		case actionTypes.SET_ERROR:
+			return setError(state, action);
 		default:
 			return state;
 	}

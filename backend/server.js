@@ -22,10 +22,10 @@ app.get('/', (req, res) => {
 	res.json({ message: 'ExpressJS server is running.' });
 });
 
-const exercisesRouter = require('./routes/exercises');
+const restaurantsRouter = require('./routes/restaurants');
 const usersRouter = require('./routes/users');
 
-app.use('/exercises', exercisesRouter);
+app.use('/restaurants', restaurantsRouter);
 app.use('/users', usersRouter);
 
 // set port, listen for requests

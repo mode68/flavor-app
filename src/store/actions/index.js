@@ -1,1 +1,1 @@
-export { initRestaurants } from './restaurantFilter';
+export { initRestaurants, addRestaurant } from './restaurantFilter';
