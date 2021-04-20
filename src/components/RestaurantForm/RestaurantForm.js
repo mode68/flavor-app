@@ -4,6 +4,7 @@ import * as actions from '../../store/actions/index';
 import * as classes from './RestaurantForm.module.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Slider from '../Slider/Slider';
 
 const RestaurantForm = (props) => {
 	const [formValues, setFormValues] = useState({
@@ -11,6 +12,8 @@ const RestaurantForm = (props) => {
 		address: '',
 		rating: '',
 		description: '',
+		priceMin: 1,
+		priceMax: 5,
 	});
 
 	const submitHandler = (event) => {
@@ -21,6 +24,12 @@ const RestaurantForm = (props) => {
 	const inputOnChangeHandler = (event, valueName) => {
 		setFormValues((prevState) => {
 			return { ...prevState, [valueName]: event.target.value };
+		});
+	};
+
+	const priceHandler = (priceMin, priceMax) => {
+		setFormValues((prevState) => {
+			return { ...prevState, priceMin: priceMin, priceMax: priceMax };
 		});
 	};
 
@@ -61,6 +70,11 @@ const RestaurantForm = (props) => {
 					onChange={(e) => inputOnChangeHandler(e, 'description')}
 				/>
 			</Form.Group>
+			<Form.Group controlId='restaurantForm.Price'>
+				<Form.Label>Price</Form.Label>
+				<Slider priceMin={formValues.priceMin} priceMax={formValues.priceMax} setPrices={priceHandler} />
+			</Form.Group>
+
 			<Button variant='primary' type='submit' onClick={(event) => submitHandler(event)}>
 				Submit
 			</Button>

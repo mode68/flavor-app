@@ -1,6 +1,14 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+export const setRestaurants = (newRestaurants) => {
+	return (dispatch) =>
+		dispatch({
+			type: actionTypes.SET_RESTAURANTS,
+			payload: newRestaurants,
+		});
+};
+
 export const initRestaurants = () => {
 	return (dispatch) => {
 		axios
@@ -21,7 +29,6 @@ export const addRestaurant = (restaurantDetails) => {
 	return (dispatch) => {
 		axios({ method: 'post', url: 'http://localhost:5000/restaurants/add', data: restaurantDetails })
 			.then((response) => {
-				console.log('response data', response.data);
 				dispatch({
 					type: actionTypes.ADD_RESTAURANT,
 					payload: response.data,

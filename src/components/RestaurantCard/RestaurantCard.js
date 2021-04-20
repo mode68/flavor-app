@@ -11,6 +11,10 @@ const RestaurantCard = (props) => {
 				<Card.Title>{props.title}</Card.Title>
 				<Card.Text>{props.description}</Card.Text>
 				<Card.Text>{'Rating: ' + props.rating}</Card.Text>
+				<Card.Text>
+					{props.priceMin !== props.priceMax ? props.priceMin + ' ~ ' + props.priceMax : '~' + props.priceMin}
+					€
+				</Card.Text>
 			</Card.Body>
 		</Card>
 	);
