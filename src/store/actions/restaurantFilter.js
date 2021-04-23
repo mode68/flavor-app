@@ -24,7 +24,7 @@ export const initRestaurants = () => {
 };
 
 // TODO: remake into using redux loading state
-export const getRestaurantById = (id, resolve, reject) => {
+export const getRestaurantById = (id) => {
 	return (dispatch) => {
 		axios
 			.get('http://localhost:5000/restaurants/' + id)
@@ -33,15 +33,9 @@ export const getRestaurantById = (id, resolve, reject) => {
 					type: actionTypes.GET_RESTAURANT_BY_ID,
 					payload: response.data,
 				});
-				if (resolve) {
-					return resolve(response.data);
-				}
 			})
 			.catch((err) => {
 				dispatch({ type: actionTypes.SET_ERROR, payload: err });
-				if (reject) {
-					return reject(err);
-				}
 			});
 	};
 };

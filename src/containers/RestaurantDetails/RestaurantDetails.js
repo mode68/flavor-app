@@ -8,17 +8,14 @@ const RestaurantDetails = ({ restaurants, restaurant, onGetRestaurantById }) => 
 	const [restaurantDetails, setRestaurantDetails] = useState();
 
 	useEffect(() => {
-		if (!restaurants && !restaurant) {
-			onGetRestaurantById(id).then((res) => {
-				setRestaurantDetails(res);
-			});
-			return;
+		if (restaurants) {
+			setRestaurantDetails(restaurants.find((restaurant) => restaurant._id === id));
+		} else if (!restaurant || restaurant._id !== id) {
+			onGetRestaurantById(id);
+		} else {
+			setRestaurantDetails(restaurant);
 		}
-
-		restaurants
-			? setRestaurantDetails(restaurants.find((restaurant) => restaurant._id === id))
-			: setRestaurantDetails(restaurant);
-	}, [id, onGetRestaurantById, restaurant, restaurants]);
+	}, [restaurant, restaurants, id, onGetRestaurantById]);
 
 	return <div>{restaurantDetails && restaurantDetails.title}</div>;
 };
@@ -32,8 +29,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onGetRestaurantById: (id) =>
-			new Promise((resolve, reject) => dispatch(actions.getRestaurantById(id, resolve, reject))),
+		onGetRestaurantById: (id) => dispatch(actions.getRestaurantById(id)),
 	};
 };
 
