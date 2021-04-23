@@ -4,31 +4,27 @@ import { connect } from 'react-redux';
 import * as classes from './RestaurantFilter.module.css';
 import * as actions from '../../store/actions/index';
 import * as consts from '../../shared/consts';
-import { CUISINE_ID_TITLE_MAP } from '../../shared/consts';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import OrderByDropdown from '../../components/OrderByDropdown/OrderByDropdown';
 import Slider from '../../components/Slider/Slider';
 import CuisineDropdown from '../../components/CuisineDropdown/CuisineDropdown';
 import { NavLink } from 'react-router-dom';
+import ActiveTagSection from '../../components/ActiveTagSection/ActiveTagSection';
 
-const lowestPriceSort = (a, b) => {
-	const aPrice = (a.priceMin + a.priceMax) / 2;
-	const bPrice = (b.priceMin + b.priceMax) / 2;
-	return aPrice < bPrice ? -1 : aPrice > bPrice ? 1 : 0;
-};
-
-const bestRatingSort = (a, b) => {
-	return a.rating > b.rating ? -1 : a.rating < b.rating ? 1 : 0;
-};
-
-const RestaurantFilter = ({ restaurants, filteredRestaurants, onInitRestaurants, onSetRestaurants }) => {
+const RestaurantFilter = ({
+	restaurants,
+	filteredRestaurants,
+	onInitRestaurants,
+	onSetRestaurants,
+	cuisine,
+	onSetCuisine,
+	priceRange,
+	onSetPriceRange,
+}) => {
 	const [searchValue, setSearchValue] = useState('');
-	const [priceRange, setPriceRange] = useState([consts.PRICE_RANGE_MIN, consts.PRICE_RANGE_MAX]);
-	const [cuisine, setCuisine] = useState('');
 	const [order, setOrder] = useState('');
 
-	// const onInitRestaurants = props.onInitRestaurants;
 	useEffect(() => {
 		onInitRestaurants();
 	}, [onInitRestaurants]);
@@ -37,21 +33,23 @@ const RestaurantFilter = ({ restaurants, filteredRestaurants, onInitRestaurants,
 		if (!restaurants) {
 			return;
 		}
-		let updatedRestaurants = restaurants.map((restaurant) => {
-			return { ...restaurant };
-		});
+
+		let updatedRestaurants = JSON.parse(JSON.stringify(restaurants));
 
 		// Filters based on the currently selected price range
 		updatedRestaurants = updatedRestaurants.filter((restaurant) => {
-			return restaurant.priceMin >= priceRange[0] && restaurant.priceMax <= priceRange[1];
+			return (
+				restaurant.priceMin >= priceRange[0] &&
+				(priceRange[1] === consts.PRICE_RANGE_MAX ? true : restaurant.priceMax <= priceRange[1])
+			);
 		});
 
 		// Filters based on the currently selected price order
 		if (order) {
 			if (order === consts.ORDER_CHEAPEST) {
-				updatedRestaurants = updatedRestaurants.sort(lowestPriceSort);
+				updatedRestaurants = updatedRestaurants.sort(consts.lowestPriceSort);
 			} else if (order === consts.ORDER_BEST_RATING) {
-				updatedRestaurants = updatedRestaurants.sort(bestRatingSort);
+				updatedRestaurants = updatedRestaurants.sort(consts.bestRatingSort);
 			} else if (order === consts.ORDER_STANDARD) {
 			}
 		}
@@ -74,11 +72,11 @@ const RestaurantFilter = ({ restaurants, filteredRestaurants, onInitRestaurants,
 	};
 
 	const cuisineChangeHandler = (cuisineIdSelected) => {
-		setCuisine(CUISINE_ID_TITLE_MAP[cuisineIdSelected]);
+		onSetCuisine(consts.CUISINE_ID_TITLE_MAP[cuisineIdSelected]);
 	};
 
 	const setPricesHandler = (priceMin, priceMax) => {
-		setPriceRange([priceMin, priceMax]);
+		onSetPriceRange([priceMin, priceMax]);
 	};
 
 	const filteredByNameRestaurants = filteredRestaurants
@@ -107,6 +105,7 @@ const RestaurantFilter = ({ restaurants, filteredRestaurants, onInitRestaurants,
 			<OrderByDropdown onSelect={orderSelectHandler} />
 			<Slider priceMin={priceRange[0]} priceMax={priceRange[1]} setPrices={setPricesHandler} />
 			<CuisineDropdown show clicked={cuisineChangeHandler} />
+			<ActiveTagSection search={searchValue} setSearch={setSearchValue} />
 			<br />
 			<div className={classes.Restaurants}>{restaurantCards}</div>
 		</div>
@@ -117,6 +116,8 @@ const mapStateToProps = (state) => {
 	return {
 		restaurants: state.restaurantFilter.restaurants,
 		filteredRestaurants: state.restaurantFilter.filteredRestaurants,
+		cuisine: state.restaurantFilter.cuisine,
+		priceRange: state.restaurantFilter.priceRange,
 	};
 };
 
@@ -124,6 +125,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onInitRestaurants: () => dispatch(actions.initRestaurants()),
 		onSetRestaurants: (newRestaurants) => dispatch(actions.setRestaurants(newRestaurants)),
+		onSetCuisine: (cuisine) => dispatch(actions.setCuisine(cuisine)),
+		onSetPriceRange: (priceRange) => dispatch(actions.setPriceRange(priceRange)),
 	};
 };
 

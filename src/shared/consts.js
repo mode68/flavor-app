@@ -21,3 +21,13 @@ export const CUISINE_ID_TITLE_MAP = {
 
 	soups: 'Soups',
 };
+
+export const lowestPriceSort = (a, b) => {
+	const aPrice = (a.priceMin + a.priceMax) / 2;
+	const bPrice = (b.priceMin + b.priceMax) / 2;
+	return aPrice < bPrice ? -1 : aPrice > bPrice ? 1 : 0;
+};
+
+export const bestRatingSort = (a, b) => {
+	return a.rating > b.rating ? -1 : a.rating < b.rating ? 1 : 0;
+};

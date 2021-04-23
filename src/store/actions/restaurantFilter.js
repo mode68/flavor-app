@@ -54,3 +54,19 @@ export const addRestaurant = (restaurantDetails) => {
 			.catch((err) => dispatch({ type: actionTypes.SET_ERROR, payload: err }));
 	};
 };
+
+export const setCuisine = (cuisine) => {
+	return (dispatch) =>
+		dispatch({
+			type: actionTypes.SET_CUISINE,
+			payload: cuisine,
+		});
+};
+
+export const setPriceRange = (priceRange) => {
+	return (dispatch) =>
+		dispatch({
+			type: actionTypes.SET_PRICE_RANGE,
+			payload: priceRange,
+		});
+};

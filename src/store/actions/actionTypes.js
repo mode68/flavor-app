@@ -3,3 +3,5 @@ export const ADD_RESTAURANT = 'ADD_RESTAURANT';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_RESTAURANTS = 'SET_RESTAURANTS';
 export const GET_RESTAURANT_BY_ID = 'GET_RESTAURANT_BY_ID';
+export const SET_CUISINE = 'SET_CUISINE';
+export const SET_PRICE_RANGE = 'SET_PRICE_RANGE';
