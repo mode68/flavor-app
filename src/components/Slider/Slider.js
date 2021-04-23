@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
 import { SliderRail, Handle, Track, Tick } from './components';
+import * as consts from '../../shared/consts';
 
 const sliderStyle = {
 	position: 'relative',
@@ -9,7 +10,7 @@ const sliderStyle = {
 
 const SliderComponent = (props) => {
 	const [sliderVal, setSliderVal] = useState({
-		domain: [1, 20],
+		domain: [consts.PRICE_RANGE_MIN, consts.PRICE_RANGE_MAX],
 		update: [props.priceMin, props.priceMax],
 		reversed: false,
 	});

@@ -1,1 +1,1 @@
-export { initRestaurants, addRestaurant, setRestaurants } from './restaurantFilter';
+export { initRestaurants, addRestaurant, setRestaurants, getRestaurantById } from './restaurantFilter';

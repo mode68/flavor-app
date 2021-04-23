@@ -15,11 +15,34 @@ export const initRestaurants = () => {
 			.get('http://localhost:5000/restaurants')
 			.then((response) => {
 				dispatch({
-					type: actionTypes.SET_RESTAURANTS,
+					type: actionTypes.INIT_RESTAURANTS,
 					payload: response.data,
 				});
 			})
 			.catch((err) => dispatch({ type: actionTypes.SET_ERROR, payload: err }));
+	};
+};
+
+// TODO: remake into using redux loading state
+export const getRestaurantById = (id, resolve, reject) => {
+	return (dispatch) => {
+		axios
+			.get('http://localhost:5000/restaurants/' + id)
+			.then((response) => {
+				dispatch({
+					type: actionTypes.GET_RESTAURANT_BY_ID,
+					payload: response.data,
+				});
+				if (resolve) {
+					return resolve(response.data);
+				}
+			})
+			.catch((err) => {
+				dispatch({ type: actionTypes.SET_ERROR, payload: err });
+				if (reject) {
+					return reject(err);
+				}
+			});
 	};
 };
 

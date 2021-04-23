@@ -1,0 +1,30 @@
+.Dropdown {
+	columns: 2;
+	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 0 10px;
+	border-radius: 5px;
+	padding: 10px;
+	text-align: left;
+	max-width: 500px;
+}
+
+.Dropdown li {
+	text-indent: 25px;
+}
+
+.Dropdown ul div {
+	font-weight: 500;
+	text-indent: 5px;
+}
+
+.Dropdown li:hover {
+	background-color: cadetblue;
+	color: white;
+	cursor: pointer;
+}
+
+.Dropdown ul div:hover {
+	background-color: darkgray;
+	color: white;
+	cursor: pointer;
+}

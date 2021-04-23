@@ -15,9 +15,9 @@ router.route('/add').post((req, res) => {
 		priceMax: Number(req.body.priceMax),
 		rating: Number(req.body.rating),
 		description: req.body.description,
+		cuisineTags: req.body.cuisineTags,
 	};
 
-	// const newRestaurant = new Restaurant({ title, address, rating, description });
 	const newRestaurant = new Restaurant(restaurant);
 
 	newRestaurant
@@ -43,10 +43,11 @@ router.route('/update/:id').post((req, res) => {
 		.then((restaurant) => {
 			restaurant.title = req.body.title;
 			restaurant.address = req.body.address;
-			restaurant.priceMin = req.body.priceMin;
-			restaurant.priceMax = req.body.priceMax;
+			restaurant.priceMin = Number(req.body.priceMin);
+			restaurant.priceMax = Number(req.body.priceMax);
 			restaurant.rating = Number(req.body.rating);
 			restaurant.description = req.body.description;
+			restaurant.cuisineTags = req.body.cuisineTags;
 
 			restaurant
 				.save()

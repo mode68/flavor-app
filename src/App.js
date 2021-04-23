@@ -3,10 +3,14 @@ import Layout from './components/Layout/Layout';
 import RestaurantFilter from './containers/RestaurantFilter/RestaurantFilter';
 import { Route, Switch } from 'react-router-dom';
 import RestaurantForm from './components/RestaurantForm/RestaurantForm';
+import RestaurantDetails from './containers/RestaurantDetails/RestaurantDetails';
 
 function App() {
 	const routes = (
 		<Switch>
+			<Route path='/restaurant/:id'>
+				<RestaurantDetails />
+			</Route>
 			<Route path='/add-restaurant'>
 				<RestaurantForm />
 			</Route>
