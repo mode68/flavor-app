@@ -1,11 +1,13 @@
 .Dropdown {
 	columns: 2;
 	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	margin: 0 10px;
 	border-radius: 5px;
 	padding: 10px;
 	text-align: left;
 	max-width: 500px;
+	position: absolute;
+	z-index: 100;
+	background-color: white;
 }
 
 .Dropdown li {

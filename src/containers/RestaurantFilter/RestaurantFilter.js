@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import * as classes from './RestaurantFilter.module.css';
 import * as actions from '../../store/actions/index';
 import * as consts from '../../shared/consts';
+import { CUISINE_ID_TITLE_MAP } from '../../shared/consts';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import OrderByDropdown from '../../components/OrderByDropdown/OrderByDropdown';
 import Slider from '../../components/Slider/Slider';
 import CuisineDropdown from '../../components/CuisineDropdown/CuisineDropdown';
-import CuisineDropdown2 from '../../components/CuisineDropdown/CuisineDropdown2';
 import { NavLink } from 'react-router-dom';
 
 const lowestPriceSort = (a, b) => {
@@ -73,8 +73,8 @@ const RestaurantFilter = ({ restaurants, filteredRestaurants, onInitRestaurants,
 		setOrder(newValue);
 	};
 
-	const cuisineChangeHandler = (cuisineSelected) => {
-		setCuisine(cuisineSelected);
+	const cuisineChangeHandler = (cuisineIdSelected) => {
+		setCuisine(CUISINE_ID_TITLE_MAP[cuisineIdSelected]);
 	};
 
 	const setPricesHandler = (priceMin, priceMax) => {
@@ -106,8 +106,7 @@ const RestaurantFilter = ({ restaurants, filteredRestaurants, onInitRestaurants,
 			<SearchBar value={searchValue} onChange={setSearchValue} />
 			<OrderByDropdown onSelect={orderSelectHandler} />
 			<Slider priceMin={priceRange[0]} priceMax={priceRange[1]} setPrices={setPricesHandler} />
-			<CuisineDropdown onChange={cuisineChangeHandler} selected={cuisine} />
-			<CuisineDropdown2 show clicked={(title) => console.log(title)} />
+			<CuisineDropdown show clicked={cuisineChangeHandler} />
 			<br />
 			<div className={classes.Restaurants}>{restaurantCards}</div>
 		</div>

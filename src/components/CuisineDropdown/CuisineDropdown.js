@@ -1,32 +1,140 @@
-import React from 'react';
-import CustomToggle from './CustomToggle';
-import CustomMenu from './CustomMenu';
-import Dropdown from 'react-bootstrap/Dropdown';
+import React, { useRef, useState, useEffect } from 'react';
+import * as classes from './CuisineDropdown.module.css';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
 
-const CuisineDropdown = (props) => {
-	const cuisineSelectHandler = (eventKey) => {
-		props.onChange(eventKey);
+const cuisineCategories = [
+	{
+		id: 'japanesecuisine',
+		displayTitle: 'Japanese Cuisine',
+		children: [
+			{
+				id: 'japanesecuisine_ramen',
+				displayTitle: 'Ramen',
+			},
+			{
+				id: 'japanesecuisine_yakiniku',
+				displayTitle: 'Yakiniku',
+			},
+		],
+	},
+	{
+		id: 'italiancuisine',
+		displayTitle: 'Italian Cuisine',
+		children: [
+			{
+				id: 'italiancuisine_pizza',
+				displayTitle: 'Pizza',
+			},
+			{
+				id: 'italiancuisine_lasagna',
+				displayTitle: 'Lasagna',
+			},
+		],
+	},
+	{
+		id: 'westerncuisine',
+		displayTitle: 'Western Cuisine',
+		children: [
+			{
+				id: 'westerncuisine_burgers',
+				displayTitle: 'Burgers',
+			},
+		],
+	},
+	{
+		id: 'sandwiches',
+		displayTitle: 'Sandwiches',
+	},
+	{
+		id: 'soups',
+		displayTitle: 'Soups',
+	},
+];
+
+function useCloseOnOutsideClick(ref, setShow) {
+	useEffect(() => {
+		function handleClickOutside(event) {
+			if (ref.current && !ref.current.contains(event.target)) {
+				setShow(false);
+			}
+		}
+
+		document.addEventListener('click', handleClickOutside);
+		return () => document.removeEventListener('click', useCloseOnOutsideClick);
+	}, [ref, setShow]);
+}
+
+const CuisineDropdown = ({ clicked }) => {
+	const [filterValue, setFilterValue] = useState('');
+	const [show, setShow] = useState(false);
+	const wrapperRef = useRef(null);
+	useCloseOnOutsideClick(wrapperRef, setShow);
+
+	const cuisineCategoriesCopy = JSON.parse(JSON.stringify(cuisineCategories));
+	const filteredCuisineCategories = !filterValue
+		? cuisineCategoriesCopy
+		: cuisineCategoriesCopy.filter((cuisine) => {
+				if (!cuisine.displayTitle.toLowerCase().includes(filterValue.toLowerCase())) {
+					if (!cuisine.children) {
+						return false;
+					}
+					cuisine.children = cuisine.children.filter((subcuisine) =>
+						subcuisine.displayTitle.toLowerCase().includes(filterValue.toLowerCase())
+					);
+					return cuisine.children.length !== 0;
+				}
+				return true;
+		  });
+
+	const onCuisineClick = (id) => {
+		clicked(id);
+		setShow(false);
 	};
 
+	let dropdownLinks = filteredCuisineCategories.map((cuisineObj) => {
+		return (
+			<ul
+				key={cuisineObj.id}
+				style={{ listStyle: 'none', padding: 0, margin: 0 }}
+				value={cuisineObj.displayTitle}
+			>
+				<div onClick={() => onCuisineClick(cuisineObj.id)}>{cuisineObj.displayTitle}</div>
+				{cuisineObj.children
+					? cuisineObj.children.map((subcuisineObj) => {
+							return (
+								<li
+									key={subcuisineObj.id}
+									onClick={() => onCuisineClick(subcuisineObj.id)}
+									value={subcuisineObj.displayTitle}
+								>
+									{subcuisineObj.displayTitle}
+								</li>
+							);
+					  })
+					: null}
+			</ul>
+		);
+	});
 	return (
-		<Dropdown onSelect={cuisineSelectHandler}>
-			<Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components'>
-				{props.selected ? props.selected : 'Select a cuisine'}
-			</Dropdown.Toggle>
-
-			<Dropdown.Menu as={CustomMenu}>
-				<Dropdown.Item eventKey='Pizza'>Pizza</Dropdown.Item>
-				<Dropdown.Item eventKey='Ramen'>Ramen</Dropdown.Item>
-				<Dropdown.Item eventKey='Burgers'>Burgers</Dropdown.Item>
-				<Dropdown.Item eventKey='Yakiniku'>Yakiniku</Dropdown.Item>
-				<Dropdown.Item eventKey='Sandwiches'>Sandwiches</Dropdown.Item>
-				<Dropdown.Item eventKey='Soups'>Soups</Dropdown.Item>
-				<Dropdown.Item eventKey='French'>Frech</Dropdown.Item>
-				<Dropdown.Item eventKey='American'>American</Dropdown.Item>
-				<Dropdown.Item eventKey='Italian'>Italian</Dropdown.Item>
-				<Dropdown.Item eventKey='Mediterranean'>Mediterranean</Dropdown.Item>
-			</Dropdown.Menu>
-		</Dropdown>
+		<div style={{ display: 'inline-block', float: 'left' }} ref={wrapperRef}>
+			<Button variant='outline-primary' onClick={() => setShow((prevState) => !prevState)} active={show}>
+				Select a cuisine
+			</Button>
+			{show && (
+				<div className={classes.Dropdown}>
+					<FormControl
+						autoFocus
+						style={{ width: '100%' }}
+						className='my-2'
+						placeholder='Type to filter...'
+						onChange={(e) => setFilterValue(e.target.value)}
+						value={filterValue}
+					/>
+					{dropdownLinks}
+				</div>
+			)}
+		</div>
 	);
 };
 
