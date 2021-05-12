@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as classes from './RestaurantFilter.module.css';
 import * as actions from '../../store/actions/index';
 import * as consts from '../../shared/consts';
+import { copyObject } from '../../shared/utility';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import OrderByDropdown from '../../components/OrderByDropdown/OrderByDropdown';
@@ -11,6 +12,7 @@ import Slider from '../../components/Slider/Slider';
 import CuisineDropdown from '../../components/CuisineDropdown/CuisineDropdown';
 import { NavLink } from 'react-router-dom';
 import ActiveTagSection from '../../components/ActiveTagSection/ActiveTagSection';
+import GoogleMap from '../Map/Map';
 
 const RestaurantFilter = ({
 	restaurants,
@@ -34,7 +36,7 @@ const RestaurantFilter = ({
 			return;
 		}
 
-		let updatedRestaurants = JSON.parse(JSON.stringify(restaurants));
+		let updatedRestaurants = copyObject(restaurants);
 
 		// Filters based on the currently selected price range
 		updatedRestaurants = updatedRestaurants.filter((restaurant) => {
@@ -86,7 +88,7 @@ const RestaurantFilter = ({
 		: [];
 
 	const restaurantCards = filteredByNameRestaurants.map((restaurant) => (
-		<NavLink key={restaurant._id} to={'/restaurant/' + restaurant._id}>
+		<NavLink key={restaurant._id} to={'/restaurant/' + restaurant._id + '/general'}>
 			<RestaurantCard
 				title={restaurant.title}
 				description={restaurant.description}
@@ -108,6 +110,7 @@ const RestaurantFilter = ({
 			<ActiveTagSection search={searchValue} setSearch={setSearchValue} />
 			<br />
 			<div className={classes.Restaurants}>{restaurantCards}</div>
+			<GoogleMap items={filteredRestaurants} />
 		</div>
 	);
 };

@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, Route, useRouteMatch, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as classes from './RestaurantDetails.module.css';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import PlaceholderImg from '../../assets/images/restaurant_placeholder.jpg';
+import StarRating from '../../components/StarRating/StarRating';
+import General from './General/General';
+import Reviews from './Reviews/Reviews';
+import MapTab from './Map/Map';
 
 const RestaurantDetails = ({ restaurants, restaurant, onGetRestaurantById }) => {
+	const routeMatch = useRouteMatch();
 	const { id } = useParams();
 	const [restaurantDetails, setRestaurantDetails] = useState();
 
@@ -17,7 +28,67 @@ const RestaurantDetails = ({ restaurants, restaurant, onGetRestaurantById }) => 
 		}
 	}, [restaurant, restaurants, id, onGetRestaurantById]);
 
-	return <div>{restaurantDetails && restaurantDetails.title}</div>;
+	return (
+		<div style={{ width: '100%' }}>
+			{restaurantDetails && (
+				<div className={classes.TopDetails}>
+					<div className={classes.TopDetailsImg}>
+						<img src={PlaceholderImg} alt='Generic placeholder' />
+					</div>
+					<div className={classes.TopDetailsText}>
+						<div>
+							<h2>{restaurantDetails.title}</h2>
+						</div>
+						<Container className={classes.TopDetailsDescription}>
+							<Row>
+								<Col sm={4}>Address:</Col>
+								<Col sm={8}>{restaurantDetails.address}</Col>
+							</Row>
+							<Row>
+								<Col sm={4}>TEL:</Col>
+								<Col sm={8}>+3706548978452</Col>
+							</Row>
+							<Row>
+								<Col sm={4}>Homepage:</Col>
+								<Col sm={8}>
+									https://www.{restaurantDetails.title.replace(/\s/g, '').toLowerCase()}.com
+								</Col>
+							</Row>
+							<Row>
+								<Col sm={4}>Rating:</Col>
+								<Col sm={8}>
+									<StarRating rating={restaurantDetails.rating} style={classes.StarRating} />
+									{restaurantDetails.rating}
+								</Col>
+							</Row>
+							<Row>
+								<Col sm={4}>Budget:</Col>
+								<Col sm={8}>
+									{restaurantDetails.priceMin + ' ~ ' + restaurantDetails.priceMax + '€'}
+								</Col>
+							</Row>
+						</Container>
+					</div>
+				</div>
+			)}
+			<Nav fill variant='tabs' defaultActiveKey='/home'>
+				<Nav.Item>
+					<NavLink to={`${routeMatch.url}/general`}>General</NavLink>
+				</Nav.Item>
+				<Nav.Item>
+					<NavLink to={`${routeMatch.url}/reviews`}>Reviews</NavLink>
+					{/* <Nav.Link eventKey='link-1'>Reviews</Nav.Link> */}
+				</Nav.Item>
+				<Nav.Item>
+					<NavLink to={`${routeMatch.url}/map`}>Map</NavLink>
+					{/* <Nav.Link eventKey='link-2'>Map</Nav.Link> */}
+				</Nav.Item>
+			</Nav>
+			<Route path={`${routeMatch.url}/general`} component={General} />
+			<Route path={`${routeMatch.url}/reviews`} component={Reviews} />
+			<Route path={`${routeMatch.url}/map`} component={MapTab} />
+		</div>
+	);
 };
 
 const mapStateToProps = (state) => {

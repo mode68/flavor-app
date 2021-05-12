@@ -5,7 +5,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-const StarRating = ({ rating }) => {
+const StarRating = ({ rating, style }) => {
 	const [starValue, setStarValue] = useState([0, 0, 0]);
 
 	useEffect(() => {
@@ -34,13 +34,15 @@ const StarRating = ({ rating }) => {
 	);
 
 	return (
-		<OverlayTrigger
-			placement='top'
-			delay={{ show: 300, hide: 300 }}
-			overlay={(settings) => renderTooltip(settings, rating)}
-		>
-			<div>{stars}</div>
-		</OverlayTrigger>
+		<div className={style}>
+			<OverlayTrigger
+				placement='top'
+				delay={{ show: 300, hide: 300 }}
+				overlay={(settings) => renderTooltip(settings, rating)}
+			>
+				<div>{stars}</div>
+			</OverlayTrigger>
+		</div>
 	);
 };
 

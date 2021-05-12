@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { copyObject } from '../../shared/utility';
 import { PRICE_RANGE_MIN, PRICE_RANGE_MAX } from '../../shared/consts';
 
 const initialState = {
@@ -27,7 +28,9 @@ const setCuisine = (state, action) => {
 };
 
 const addRestaurant = (state, action) => {
-	return { ...state, restaurants: [...state.restaurants, action.payload] };
+	let restaurantCopy = copyObject(state.restaurants);
+	restaurantCopy.push(action.payload);
+	return { ...state, restaurants: restaurantCopy };
 };
 
 const getRestaurantById = (state, action) => {

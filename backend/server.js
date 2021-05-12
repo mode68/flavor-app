@@ -23,9 +23,11 @@ app.get('/', (req, res) => {
 });
 
 const restaurantsRouter = require('./routes/restaurants');
+const restaurantDetailsRouter = require('./routes/restaurants');
 const usersRouter = require('./routes/users');
 
 app.use('/restaurants', restaurantsRouter);
+app.use('/restaurantDetails', restaurantDetailsRouter);
 app.use('/users', usersRouter);
 
 // set port, listen for requests

@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as classes from './CuisineDropdown.module.css';
+import { copyObject } from '../../shared/utility';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 
@@ -71,7 +72,7 @@ const CuisineDropdown = ({ clicked }) => {
 	const wrapperRef = useRef(null);
 	useCloseOnOutsideClick(wrapperRef, setShow);
 
-	const cuisineCategoriesCopy = JSON.parse(JSON.stringify(cuisineCategories));
+	const cuisineCategoriesCopy = copyObject(cuisineCategories);
 	const filteredCuisineCategories = !filterValue
 		? cuisineCategoriesCopy
 		: cuisineCategoriesCopy.filter((cuisine) => {

@@ -1,0 +1,35 @@
+.TopDetails {
+	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 5px;
+	text-align: left;
+	margin-bottom: 50px;
+	padding: 20px;
+	display: flex;
+}
+
+.TopDetails > div {
+	display: inline-block;
+}
+
+.TopDetailsImg {
+	margin: 0;
+}
+
+.TopDetails img {
+	height: 260px;
+}
+
+.TopDetailsText {
+	width: auto;
+	margin-left: 20px;
+}
+
+.TopDetailsDescription {
+	text-align: left;
+	padding: 0;
+}
+
+.StarRating {
+	display: inline-block;
+	margin-right: 10px;
+}

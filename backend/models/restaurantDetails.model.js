@@ -11,7 +11,6 @@ const restaurantSchema = new Schema(
 		priceMax: { type: Number, required: true },
 		description: { type: String, required: true },
 		cuisineTags: { type: Array, required: true },
-		coordinates: { type: Object, required: true },
 	},
 	{
 		timestamps: true,
