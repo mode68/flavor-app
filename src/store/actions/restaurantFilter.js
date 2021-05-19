@@ -42,7 +42,6 @@ export const getRestaurantById = (id) => {
 
 export const addRestaurant = (restaurantDetails) => {
 	restaurantDetails.rating = parseInt(restaurantDetails.rating);
-	console.log('restaurantDetails', restaurantDetails);
 	return (dispatch) => {
 		axios({ method: 'post', url: 'http://localhost:5000/restaurants/add', data: restaurantDetails })
 			.then((response) => {
@@ -69,4 +68,20 @@ export const setPriceRange = (priceRange) => {
 			type: actionTypes.SET_PRICE_RANGE,
 			payload: priceRange,
 		});
+};
+
+export const getRestaurantDetailsById = (id) => {
+	return (dispatch) => {
+		axios
+			.get('http://localhost:5000/restaurantDetails/' + id)
+			.then((response) => {
+				dispatch({
+					type: actionTypes.GET_RESTAURANT_DETAILS_BY_ID,
+					payload: response.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({ type: actionTypes.SET_ERROR, payload: err });
+			});
+	};
 };

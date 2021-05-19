@@ -10,6 +10,8 @@ const restaurantSchema = new Schema(
 		priceMin: { type: Number, required: true },
 		priceMax: { type: Number, required: true },
 		description: { type: String, required: true },
+		telephone: { type: String, required: true },
+		website: { type: String, required: true },
 		cuisineTags: { type: Array, required: true },
 		coordinates: { type: Object, required: true },
 	},

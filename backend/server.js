@@ -1,14 +1,38 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 require('dotenv').config();
+
+// Passport config
+require('./passportConfig')(passport);
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(
+	cors({
+		origin: 'http://localhost:3000',
+		credentials: true,
+	})
+);
 app.use(express.json());
+app.use(
+	session({
+		secret: 'ajinohimitsu',
+		resave: true,
+		saveUninitialized: true,
+	})
+);
+
+app.use(cookieParser('ajinohimitsu'));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 const url = process.env.ATLAS_URL;
 mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
@@ -23,12 +47,12 @@ app.get('/', (req, res) => {
 });
 
 const restaurantsRouter = require('./routes/restaurants');
-const restaurantDetailsRouter = require('./routes/restaurants');
-const usersRouter = require('./routes/users');
+const restaurantDetailsRouter = require('./routes/restaurantDetails');
+const userRouter = require('./routes/user');
 
 app.use('/restaurants', restaurantsRouter);
 app.use('/restaurantDetails', restaurantDetailsRouter);
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
 
 // set port, listen for requests
 app.listen(port, () => {

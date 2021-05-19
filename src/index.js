@@ -10,12 +10,14 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import restaurantFilterReducer from './store/reducers/restaurantFilter';
+import authenticationReducer from './store/reducers/authentication';
 
 const composeEnhancers =
 	process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
 	restaurantFilter: restaurantFilterReducer,
+	authentication: authenticationReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

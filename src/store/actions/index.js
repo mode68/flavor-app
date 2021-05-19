@@ -5,4 +5,7 @@ export {
 	getRestaurantById,
 	setCuisine,
 	setPriceRange,
+	getRestaurantDetailsById,
 } from './restaurantFilter';
+
+export { addUser, loginUser } from './authentication';

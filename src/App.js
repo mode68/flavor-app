@@ -4,6 +4,7 @@ import RestaurantFilter from './containers/RestaurantFilter/RestaurantFilter';
 import { Route, Switch } from 'react-router-dom';
 import RestaurantForm from './components/RestaurantForm/RestaurantForm';
 import RestaurantDetails from './containers/RestaurantDetails/RestaurantDetails';
+import LoginForm from './containers/LoginForm/LoginForm';
 
 function App() {
 	const routes = (
@@ -13,6 +14,9 @@ function App() {
 			</Route>
 			<Route path='/add-restaurant'>
 				<RestaurantForm />
+			</Route>
+			<Route path='/login'>
+				<LoginForm />
 			</Route>
 			<Route path='/'>
 				<RestaurantFilter />

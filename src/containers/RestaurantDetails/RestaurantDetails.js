@@ -71,22 +71,26 @@ const RestaurantDetails = ({ restaurants, restaurant, onGetRestaurantById }) => 
 					</div>
 				</div>
 			)}
-			<Nav fill variant='tabs' defaultActiveKey='/home'>
+			<Nav fill variant='tabs' defaultActiveKey='/home' className={classes.MainNavTabs}>
 				<Nav.Item>
-					<NavLink to={`${routeMatch.url}/general`}>General</NavLink>
+					<Nav.Link eventKey='link-0' as={NavLink} to={`${routeMatch.url}/general`}>
+						General
+					</Nav.Link>
 				</Nav.Item>
 				<Nav.Item>
-					<NavLink to={`${routeMatch.url}/reviews`}>Reviews</NavLink>
-					{/* <Nav.Link eventKey='link-1'>Reviews</Nav.Link> */}
+					<Nav.Link eventKey='link-1' as={NavLink} to={`${routeMatch.url}/reviews`}>
+						Reviews
+					</Nav.Link>
 				</Nav.Item>
 				<Nav.Item>
-					<NavLink to={`${routeMatch.url}/map`}>Map</NavLink>
-					{/* <Nav.Link eventKey='link-2'>Map</Nav.Link> */}
+					<Nav.Link eventKey='link-2' as={NavLink} to={`${routeMatch.url}/map`}>
+						Map
+					</Nav.Link>
 				</Nav.Item>
 			</Nav>
-			<Route path={`${routeMatch.url}/general`} component={General} />
-			<Route path={`${routeMatch.url}/reviews`} component={Reviews} />
-			<Route path={`${routeMatch.url}/map`} component={MapTab} />
+			<Route path={`${routeMatch.path}/general`} component={General} />
+			<Route path={`${routeMatch.path}/reviews`} component={Reviews} />
+			<Route path={`${routeMatch.path}/map`} component={MapTab} />
 		</div>
 	);
 };

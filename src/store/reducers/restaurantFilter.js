@@ -4,6 +4,7 @@ import { PRICE_RANGE_MIN, PRICE_RANGE_MAX } from '../../shared/consts';
 
 const initialState = {
 	restaurant: null,
+	restaurantDetails: null,
 	restaurants: null,
 	filteredRestaurants: null,
 	priceRange: [PRICE_RANGE_MIN, PRICE_RANGE_MAX],
@@ -37,6 +38,10 @@ const getRestaurantById = (state, action) => {
 	return { ...state, restaurant: action.payload };
 };
 
+const getRestaurantDetailsById = (state, action) => {
+	return { ...state, restaurantDetails: action.payload };
+};
+
 const setPriceRange = (state, action) => {
 	return { ...state, priceRange: action.payload };
 };
@@ -57,6 +62,8 @@ const reducer = (state = initialState, action) => {
 			return setPriceRange(state, action);
 		case actionTypes.SET_ERROR:
 			return setError(state, action);
+		case actionTypes.GET_RESTAURANT_DETAILS_BY_ID:
+			return getRestaurantDetailsById(state, action);
 		default:
 			return state;
 	}

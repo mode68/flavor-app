@@ -16,6 +16,8 @@ router.route('/add').post((req, res) => {
 		rating: Number(req.body.rating),
 		description: req.body.description,
 		cuisineTags: req.body.cuisineTags,
+		telephone: req.body.telephone,
+		website: req.body.website,
 	};
 
 	const newRestaurant = new Restaurant(restaurant);
@@ -38,7 +40,7 @@ router.route('/:id').delete((req, res) => {
 		.catch((err) => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) => {
+router.route('/set/:id').post((req, res) => {
 	Restaurant.findById(req.params.id)
 		.then((restaurant) => {
 			restaurant.title = req.body.title;
@@ -47,13 +49,21 @@ router.route('/update/:id').post((req, res) => {
 			restaurant.priceMax = Number(req.body.priceMax);
 			restaurant.rating = Number(req.body.rating);
 			restaurant.description = req.body.description;
+			restaurant.website = req.body.website;
+			restaurant.telephone = req.body.telephone;
 			restaurant.cuisineTags = req.body.cuisineTags;
 
 			restaurant
 				.save()
-				.then(() => res.json('Restaurant updated!'))
+				.then(() => res.json('Restaurant set!'))
 				.catch((err) => res.status(400).json('Error: ' + err));
 		})
+		.catch((err) => res.status(400).json('Error: ' + err));
+});
+
+router.route('/update/:id').post((req, res) => {
+	Restaurant.findByIdAndUpdate(req.params.id, req.body)
+		.then(() => res.json('Restaurant was updated!'))
 		.catch((err) => res.status(400).json('Error: ' + err));
 });
 
