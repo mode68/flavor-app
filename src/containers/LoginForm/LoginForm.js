@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-const LoginForm = ({ onAddUser, onUserLogin, isAuthenticated }) => {
+const LoginForm = ({ onAddUser, onUserLogin, isAuthenticated, error, onClearError }) => {
 	const history = useHistory();
 	const [isLogin, setIsLogin] = useState(true);
 	const [loginForm, setLoginForm] = useState({
@@ -41,6 +42,11 @@ const LoginForm = ({ onAddUser, onUserLogin, isAuthenticated }) => {
 
 	return isLogin ? (
 		<Form>
+			{error ? (
+				<Alert variant='danger' dismissible onClose={onClearError}>
+					{error}
+				</Alert>
+			) : null}
 			<Form.Group controlId='formBasicEmail'>
 				<Form.Label>Email address</Form.Label>
 				<Form.Control
@@ -159,6 +165,7 @@ const mapStateToProps = (state) => {
 		token: state.authentication.token,
 		loading: state.authentication.loading,
 		isAuthenticated: state.authentication.isAuthenticated,
+		error: state.authentication.error,
 	};
 };
 
@@ -166,6 +173,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onAddUser: (signUpForm) => dispatch(actions.addUser(signUpForm)),
 		onUserLogin: (loginForm) => dispatch(actions.loginUser(loginForm)),
+		onClearError: () => dispatch(actions.clearAuthError()),
 	};
 };
 

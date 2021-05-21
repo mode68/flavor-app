@@ -1,9 +1,12 @@
 import React from 'react';
+import * as actions from '../../store/actions/index';
 import * as classes from './Navigation.module.css';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button';
 
-const Navigation = () => {
+const Navigation = ({ isAuthenticated, user, onUserLogout }) => {
 	return (
 		<Nav variant='pills' defaultActiveKey='/'>
 			<Nav.Item className={classes.NavigationItem}>
@@ -12,8 +15,35 @@ const Navigation = () => {
 			<Nav.Item className={classes.NavigationItem}>
 				<NavLink to='/add-restaurant'>Add Restaurant</NavLink>
 			</Nav.Item>
+			<Button variant='outline-primary' onClick={onUserLogout}>
+				Logout
+			</Button>
+			{isAuthenticated ? (
+				<div>
+					<div>
+						Welcome {user.firstName} {user.lastName}!
+					</div>
+				</div>
+			) : (
+				<Nav.Item className={classes.NavigationItem}>
+					<NavLink to='/login'>Login</NavLink>
+				</Nav.Item>
+			)}
 		</Nav>
 	);
 };
 
-export default Navigation;
+const mapStateToProps = (state) => {
+	return {
+		user: state.authentication.user,
+		isAuthenticated: state.authentication.isAuthenticated,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onUserLogout: () => dispatch(actions.logoutUser()),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

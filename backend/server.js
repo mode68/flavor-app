@@ -25,6 +25,10 @@ app.use(
 		secret: 'ajinohimitsu',
 		resave: true,
 		saveUninitialized: true,
+		cookie: {
+			secure: true,
+			maxAge: 60 * 60 * 1000, // Cookie should last for 5 seconds
+		},
 	})
 );
 

@@ -1,6 +1,4 @@
 import * as actionTypes from '../actions/actionTypes';
-import { copyObject } from '../../shared/utility';
-import { useHistory } from 'react-router-dom';
 
 const initialState = {
 	user: null,
@@ -15,15 +13,19 @@ const addUser = (state, action) => {
 };
 
 const loginUser = (state, action) => {
-	return { ...state, user: action.payload, isAuthenticated: true };
+	return { ...state, user: action.payload, isAuthenticated: true, error: '' };
 };
 
 const logoutUser = (state, action) => {
-	return { ...state, user: null, isAuthenticated: false };
+	return { ...state, user: null, isAuthenticated: false, error: '' };
 };
 
 const setError = (state, action) => {
 	return { ...state, error: action.payload };
+};
+
+const clearError = (state, action) => {
+	return { ...state, error: '' };
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +38,8 @@ const reducer = (state = initialState, action) => {
 			return logoutUser(state, action);
 		case actionTypes.SET_AUTH_ERROR:
 			return setError(state, action);
+		case actionTypes.CLEAR_AUTH_ERROR:
+			return clearError(state, action);
 		default:
 			return state;
 	}
