@@ -5,8 +5,19 @@ import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 const Navigation = ({ isAuthenticated, user, onUserLogout }) => {
+	const callUserRoot = () => {
+		axios({ method: 'post', url: 'http://localhost:5000/user/checkauth' })
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
 	return (
 		<Nav variant='pills' defaultActiveKey='/'>
 			<Nav.Item className={classes.NavigationItem}>
@@ -17,6 +28,9 @@ const Navigation = ({ isAuthenticated, user, onUserLogout }) => {
 			</Nav.Item>
 			<Button variant='outline-primary' onClick={onUserLogout}>
 				Logout
+			</Button>
+			<Button variant='outline-primary' onClick={callUserRoot}>
+				user/
 			</Button>
 			{isAuthenticated ? (
 				<div>

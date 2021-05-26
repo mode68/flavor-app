@@ -24,15 +24,15 @@ module.exports = function (passport) {
 	);
 
 	passport.serializeUser((user, done) => {
-		done(null, user.id);
+		done(null, user._id);
 	});
 
 	passport.deserializeUser((id, done) => {
-		User.findById(id).then((err, user) => {
+		User.findById(id).then((user, err) => {
 			if (err) {
 				done(null, false, { error: err });
 			} else {
-				done(err, user);
+				done(null, user);
 			}
 		});
 	});

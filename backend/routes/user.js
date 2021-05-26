@@ -52,8 +52,20 @@ router.route('/register').post((req, res) => {
 	});
 });
 
-router.route('/get').get((req, res) => {
-	console.log(req.body);
+router.route('/checkauth').post((req, res) => {
+	console.log(req.isAuthenticated());
+	if (req.user) {
+		console.log('user is authenticated!');
+		return next();
+	} else {
+		console.log('user is NOT authenticated!');
+		return res.status(401).json({ error: 'User not authenticated' });
+	}
+});
+
+router.route('/').get((req, res) => {
+	console.log(req);
+	// res.send(req);
 });
 
 router.route('/logout').get((req, res) => {

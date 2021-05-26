@@ -3,12 +3,10 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+var session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 require('dotenv').config();
-
-// Passport config
-require('./passportConfig')(passport);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,13 +18,23 @@ app.use(
 	})
 );
 app.use(express.json());
+
+const url = process.env.ATLAS_URL;
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+const connection = mongoose.connection;
+connection.once('open', () => {
+	console.log('MongoDB database connection established successfully');
+});
+
+const sessionStore = MongoStore.create({ mongoUrl: url, collection: 'sessions' });
+
 app.use(
 	session({
 		secret: 'ajinohimitsu',
 		resave: true,
 		saveUninitialized: true,
+		store: sessionStore,
 		cookie: {
-			secure: true,
 			maxAge: 60 * 60 * 1000, // Cookie should last for 5 seconds
 		},
 	})
@@ -38,12 +46,8 @@ app.use(cookieParser('ajinohimitsu'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-const url = process.env.ATLAS_URL;
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
-const connection = mongoose.connection;
-connection.once('open', () => {
-	console.log('MongoDB database connection established successfully');
-});
+// Passport config
+require('./passportConfig')(passport);
 
 // simple route
 app.get('/', (req, res) => {
