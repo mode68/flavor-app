@@ -6,7 +6,7 @@ import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-const LoginForm = ({ onAddUser, onUserLogin, isAuthenticated, error, onClearError }) => {
+const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError }) => {
 	const history = useHistory();
 	const [isLogin, setIsLogin] = useState(true);
 	const [loginForm, setLoginForm] = useState({
@@ -23,10 +23,10 @@ const LoginForm = ({ onAddUser, onUserLogin, isAuthenticated, error, onClearErro
 	});
 
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (authenticated) {
 			history.push('/');
 		}
-	}, [isAuthenticated]);
+	}, [authenticated]);
 
 	const onLoginFormChange = (event, fieldName, checkbox = false) => {
 		const updatedLoginForm = { ...loginForm };
@@ -164,7 +164,7 @@ const mapStateToProps = (state) => {
 		user: state.authentication.user,
 		token: state.authentication.token,
 		loading: state.authentication.loading,
-		isAuthenticated: state.authentication.isAuthenticated,
+		authenticated: state.authentication.authenticated,
 		error: state.authentication.error,
 	};
 };

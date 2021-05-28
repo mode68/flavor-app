@@ -1,9 +1,9 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../axiosConfig';
 
 export const addUser = (user) => {
 	return (dispatch) =>
-		axios({ method: 'post', url: 'http://localhost:5000/user/register', data: user, withCredentials: true })
+		axios({ method: 'post', url: '/user/register', data: user, withCredentials: true })
 			.then((response) => {
 				dispatch({
 					type: response.data.success ? actionTypes.ADD_USER : actionTypes.SET_AUTH_ERROR,
@@ -15,7 +15,7 @@ export const addUser = (user) => {
 
 export const loginUser = (user) => {
 	return (dispatch) =>
-		axios({ method: 'post', url: 'http://localhost:5000/user/login', data: user, withCredentials: true })
+		axios({ method: 'post', url: '/user/login', data: user, withCredentials: true })
 			.then((response) => {
 				response.data.success
 					? dispatch({
@@ -34,7 +34,7 @@ export const loginUser = (user) => {
 
 export const logoutUser = (user) => {
 	return (dispatch) =>
-		axios({ method: 'get', url: 'http://localhost:5000/user/logout' })
+		axios({ method: 'get', url: '/user/logout' })
 			.then((response) => {
 				dispatch({
 					type: response.data.success ? actionTypes.LOGOUT_USER : actionTypes.SET_AUTH_ERROR,
@@ -42,6 +42,20 @@ export const logoutUser = (user) => {
 				});
 			})
 			.catch((err) => dispatch({ type: actionTypes.SET_AUTH_ERROR, payload: err }));
+};
+
+export const isAuthenticated = () => {
+	return (dispatch) =>
+		axios({ method: 'get', url: '/user/is-authenticated', withCredentials: true })
+			.then((response) => {
+				dispatch({
+					type: actionTypes.IS_AUTHENTICATED,
+					payload: response.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({ type: actionTypes.SET_AUTH_ERROR, payload: err });
+			});
 };
 
 export const clearAuthError = () => {

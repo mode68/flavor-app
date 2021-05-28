@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../axiosConfig';
 
 export const setRestaurants = (newRestaurants) => {
 	return (dispatch) =>
@@ -12,7 +12,7 @@ export const setRestaurants = (newRestaurants) => {
 export const initRestaurants = () => {
 	return (dispatch) => {
 		axios
-			.get('http://localhost:5000/restaurants')
+			.get('/restaurants')
 			.then((response) => {
 				dispatch({
 					type: actionTypes.INIT_RESTAURANTS,
@@ -27,7 +27,7 @@ export const initRestaurants = () => {
 export const getRestaurantById = (id) => {
 	return (dispatch) => {
 		axios
-			.get('http://localhost:5000/restaurants/' + id)
+			.get('/restaurants/' + id)
 			.then((response) => {
 				dispatch({
 					type: actionTypes.GET_RESTAURANT_BY_ID,
@@ -43,7 +43,7 @@ export const getRestaurantById = (id) => {
 export const addRestaurant = (restaurantDetails) => {
 	restaurantDetails.rating = parseInt(restaurantDetails.rating);
 	return (dispatch) => {
-		axios({ method: 'post', url: 'http://localhost:5000/restaurants/add', data: restaurantDetails })
+		axios({ method: 'post', url: '/restaurants/add', data: restaurantDetails })
 			.then((response) => {
 				dispatch({
 					type: actionTypes.ADD_RESTAURANT,
@@ -73,7 +73,7 @@ export const setPriceRange = (priceRange) => {
 export const getRestaurantDetailsById = (id) => {
 	return (dispatch) => {
 		axios
-			.get('http://localhost:5000/restaurantDetails/' + id)
+			.get('/restaurantDetails/' + id)
 			.then((response) => {
 				dispatch({
 					type: actionTypes.GET_RESTAURANT_DETAILS_BY_ID,

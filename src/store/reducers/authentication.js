@@ -13,11 +13,19 @@ const addUser = (state, action) => {
 };
 
 const loginUser = (state, action) => {
-	return { ...state, user: action.payload, isAuthenticated: true, error: '' };
+	return { ...state, user: action.payload, authenticated: true, error: '' };
 };
 
 const logoutUser = (state, action) => {
-	return { ...state, user: null, isAuthenticated: false, error: '' };
+	return { ...state, user: null, authenticated: false, error: '' };
+};
+
+const isAuthenticated = (state, action) => {
+	let user = null;
+	if (action.payload.isAuthenticated) {
+		user = action.payload.user;
+	}
+	return { ...state, authenticated: action.payload.isAuthenticated, user: user };
 };
 
 const setError = (state, action) => {
@@ -36,6 +44,8 @@ const reducer = (state = initialState, action) => {
 			return loginUser(state, action);
 		case actionTypes.LOGOUT_USER:
 			return logoutUser(state, action);
+		case actionTypes.IS_AUTHENTICATED:
+			return isAuthenticated(state, action);
 		case actionTypes.SET_AUTH_ERROR:
 			return setError(state, action);
 		case actionTypes.CLEAR_AUTH_ERROR:

@@ -11,6 +11,9 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Passport config
+require('./passportConfig')(passport);
+
 app.use(
 	cors({
 		origin: 'http://localhost:3000',
@@ -19,14 +22,8 @@ app.use(
 );
 app.use(express.json());
 
-// Passport config
-require('./passportConfig')(passport);
-
-const connection = mongoose.createConnection(process.env.ATLAS_URL, {
-	useUnifiedTopology: true,
-	useNewUrlParser: true,
-	//useCreateIndex: true,
-});
+mongoose.connect(process.env.ATLAS_URL, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+const connection = mongoose.connection;
 connection.once('open', () => {
 	console.log('MongoDB database connection established successfully');
 });

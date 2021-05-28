@@ -53,8 +53,12 @@ router.route('/register').post((req, res) => {
 	});
 });
 
-router.post('/checkauth', isAuth, (req, res) => {
-	return res.json({ error: 'You have reached check auth page' });
+router.get('/is-authenticated', isAuth, (req, res) => {
+	return res.json({ isAuthenticated: true, user: req.user, message: 'User is authenticated!' });
+});
+
+router.get('/not-authenticated', (req, res) => {
+	return res.json({ isAuthenticated: false, message: 'User authentification failed.' });
 });
 
 router.route('/').get((req, res) => {

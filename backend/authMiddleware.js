@@ -4,6 +4,6 @@ module.exports.isAuth = (req, res, next) => {
 		next();
 	} else {
 		console.log('You are NOT authenticated');
-		res.status(401).json({ message: 'You are not authorized to view this page' });
+		res.redirect('/user/not-authenticated');
 	}
 };

@@ -8,4 +8,4 @@ export {
 	getRestaurantDetailsById,
 } from './restaurantFilter';
 
-export { addUser, loginUser, logoutUser, clearAuthError } from './authentication';
+export { addUser, loginUser, logoutUser, clearAuthError, isAuthenticated } from './authentication';
