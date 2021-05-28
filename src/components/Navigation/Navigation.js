@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const Navigation = ({ isAuthenticated, user, onUserLogout }) => {
 	const callUserRoot = () => {
-		axios({ method: 'post', url: 'http://localhost:5000/user/checkauth' })
+		axios({ method: 'post', url: 'http://localhost:5000/user/checkauth', withCredentials: true })
 			.then((response) => {
 				console.log(response);
 			})

@@ -19,18 +19,23 @@ app.use(
 );
 app.use(express.json());
 
-const url = process.env.ATLAS_URL;
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
-const connection = mongoose.connection;
+// Passport config
+require('./passportConfig')(passport);
+
+const connection = mongoose.createConnection(process.env.ATLAS_URL, {
+	useUnifiedTopology: true,
+	useNewUrlParser: true,
+	//useCreateIndex: true,
+});
 connection.once('open', () => {
 	console.log('MongoDB database connection established successfully');
 });
 
-const sessionStore = MongoStore.create({ mongoUrl: url, collection: 'sessions' });
+const sessionStore = MongoStore.create({ mongoUrl: process.env.ATLAS_URL, collection: 'sessions' });
 
 app.use(
 	session({
-		secret: 'ajinohimitsu',
+		secret: process.env.SECRET,
 		resave: true,
 		saveUninitialized: true,
 		store: sessionStore,
@@ -40,14 +45,11 @@ app.use(
 	})
 );
 
-app.use(cookieParser('ajinohimitsu'));
+app.use(cookieParser(process.env.SECRET));
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Passport config
-require('./passportConfig')(passport);
 
 // simple route
 app.get('/', (req, res) => {

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const isAuth = require('../authMiddleware').isAuth;
 let User = require('../models/user.model');
 
 router.route('/login').post((req, res, next) => {
@@ -52,20 +53,13 @@ router.route('/register').post((req, res) => {
 	});
 });
 
-router.route('/checkauth').post((req, res) => {
-	console.log(req.isAuthenticated());
-	if (req.user) {
-		console.log('user is authenticated!');
-		return next();
-	} else {
-		console.log('user is NOT authenticated!');
-		return res.status(401).json({ error: 'User not authenticated' });
-	}
+router.post('/checkauth', isAuth, (req, res) => {
+	return res.json({ error: 'You have reached check auth page' });
 });
 
 router.route('/').get((req, res) => {
 	console.log(req);
-	// res.send(req);
+	res.send(req);
 });
 
 router.route('/logout').get((req, res) => {
