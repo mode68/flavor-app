@@ -1,5 +1,24 @@
 .Restaurants {
 	background-color: rgb(188, 229, 229);
-	width: 100%;
 	display: inline-block;
+}
+
+.GoogleMap {
+	width: 500px;
+	height: 500px;
+}
+
+.RestaurantCardContainer {
+	height: 60vh;
+	overflow: scroll;
+	overflow-x: hidden;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	background-color: #cecece;
+}
+
+.RestaurantCardPagination {
+	bottom: 5px;
+	left: 60px;
+	position: fixed;
 }

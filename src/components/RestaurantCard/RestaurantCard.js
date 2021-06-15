@@ -1,5 +1,4 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import * as classes from './RestaurantCard.module.css';
 import RestaurantPlaceholderImg from '../../assets/images/restaurant_placeholder.jpg';
@@ -12,19 +11,37 @@ const RestaurantCard = (props) => {
 		</Badge>
 	));
 	return (
-		<Card className={classes.RestaurantCard}>
-			<Card.Img variant='top' src={RestaurantPlaceholderImg} />
-			<Card.Body>
-				<Card.Title>{props.title}</Card.Title>
-				<Card.Text>{props.description}</Card.Text>
-				<StarRating rating={props.rating} />
-				<Card.Text>
-					{props.priceMin !== props.priceMax ? props.priceMin + ' ~ ' + props.priceMax : '~' + props.priceMin}
-					€
-				</Card.Text>
-				{cuisineTags}
-			</Card.Body>
-		</Card>
+		<>
+			<div className='container-fluid'>
+				<div className='row'>
+					<div className='col-12 mt-3'>
+						<div className='card'>
+							<div className={classes.CardHorizontal}>
+								<div className='img-square-wrapper'>
+									<img
+										className={classes.RestaurantCardImage}
+										src={RestaurantPlaceholderImg}
+										alt='Card image cap'
+									/>
+								</div>
+								<div className='card-body'>
+									<h4 className='card-title'>{props.title}</h4>
+									<div className='card-text'>
+										{props.description}
+										<StarRating rating={props.rating} />
+										{props.priceMin !== props.priceMax
+											? props.priceMin + ' ~ ' + props.priceMax
+											: '~' + props.priceMin}
+										€
+									</div>
+								</div>
+							</div>
+							<div className='card-footer'>{cuisineTags}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</>
 	);
 };
 

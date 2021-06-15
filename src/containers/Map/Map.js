@@ -18,7 +18,7 @@ const options = {
 	styles: mapStyles,
 };
 
-const MapComponent = ({ items }) => {
+const MapComponent = ({ items, mapStyle, mapClassName }) => {
 	const { isLoaded, loadError } = useLoadScript({
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 	});
@@ -34,13 +34,7 @@ const MapComponent = ({ items }) => {
 
 	return (
 		<div>
-			<GoogleMap
-				mapContainerStyle={mapContainerStyle}
-				zoom={14}
-				center={center}
-				options={options}
-				onLoad={onMapLoad}
-			>
+			<GoogleMap mapContainerStyle={mapStyle} zoom={14} center={center} options={options} onLoad={onMapLoad}>
 				{items
 					? items.map((item) => (
 							<Marker

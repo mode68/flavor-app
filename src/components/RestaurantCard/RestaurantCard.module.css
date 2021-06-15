@@ -3,3 +3,12 @@
 	display: inline-block;
 	margin: 5px;
 }
+
+.CardHorizontal {
+	display: flex;
+	flex: 1 1 auto;
+}
+
+.RestaurantCardImage {
+	width: 270px;
+}

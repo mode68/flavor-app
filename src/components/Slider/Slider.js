@@ -28,9 +28,9 @@ const SliderComponent = (props) => {
 	return (
 		<div style={{ width: '100%', padding: '20px', margin: '30px 0' }}>
 			<div>
-				<div style={{ float: 'left', marginTop: '-50px' }}>nuo {props.priceMin}€</div>
+				<div style={{ float: 'left', marginTop: '-50px' }}>from {props.priceMin}€</div>
 				<div style={{ float: 'right', marginTop: '-50px' }}>
-					iki {props.priceMax}
+					up to {props.priceMax}
 					{props.priceMax === sliderVal.domain[1] ? '+' : ''}€
 				</div>
 			</div>

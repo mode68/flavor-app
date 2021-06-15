@@ -1,12 +1,15 @@
 import * as actionTypes from '../actions/actionTypes';
 import { copyObject } from '../../shared/utility';
 import { PRICE_RANGE_MIN, PRICE_RANGE_MAX } from '../../shared/consts';
+import { stateValueMap } from '../../components/DetailsFilter/DetailsFilterMap';
 
 const initialState = {
 	restaurant: null,
 	restaurantDetails: null,
 	restaurants: null,
 	filteredRestaurants: null,
+	detailsFilter: stateValueMap,
+	reviews: null,
 	priceRange: [PRICE_RANGE_MIN, PRICE_RANGE_MAX],
 	cuisine: '',
 	error: '',
@@ -46,6 +49,18 @@ const setPriceRange = (state, action) => {
 	return { ...state, priceRange: action.payload };
 };
 
+const addReview = (state, action) => {
+	return state;
+};
+
+const filterByDetails = (state, action) => {
+	return state;
+};
+
+const getReviewsById = (state, action) => {
+	return { ...state, reviews: action.payload };
+};
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.INIT_RESTAURANTS:
@@ -60,6 +75,12 @@ const reducer = (state = initialState, action) => {
 			return setCuisine(state, action);
 		case actionTypes.SET_PRICE_RANGE:
 			return setPriceRange(state, action);
+		case actionTypes.ADD_REVIEW:
+			return addReview(state, action);
+		case actionTypes.GET_REVIEWS_BY_ID:
+			return getReviewsById(state, action);
+		case actionTypes.FILTER_BY_DETAILS:
+			return filterByDetails(state, action);
 		case actionTypes.SET_ERROR:
 			return setError(state, action);
 		case actionTypes.GET_RESTAURANT_DETAILS_BY_ID:

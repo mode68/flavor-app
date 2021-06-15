@@ -56,10 +56,12 @@ app.get('/', (req, res) => {
 const restaurantsRouter = require('./routes/restaurants');
 const restaurantDetailsRouter = require('./routes/restaurantDetails');
 const userRouter = require('./routes/user');
+const reviewRouter = require('./routes/reviews');
 
 app.use('/restaurants', restaurantsRouter);
 app.use('/restaurantDetails', restaurantDetailsRouter);
 app.use('/user', userRouter);
+app.use('/reviews', reviewRouter);
 
 // set port, listen for requests
 app.listen(port, () => {

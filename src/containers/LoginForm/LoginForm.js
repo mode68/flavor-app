@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import * as actions from '../../store/actions/index';
+import * as classes from './LoginForm.module.css';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -42,13 +43,16 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 
 	return isLogin ? (
 		<Form>
+			<div className={classes.FormTitle}>
+				<label>LOGIN</label>
+			</div>
 			{error ? (
 				<Alert variant='danger' dismissible onClose={onClearError}>
 					{error}
 				</Alert>
 			) : null}
-			<Form.Group controlId='formBasicEmail'>
-				<Form.Label>Email address</Form.Label>
+			<Form.Group controlId='formBasicEmail' className={classes.SigninField}>
+				<Form.Label className={classes.LoginLabel}>Email address</Form.Label>
 				<Form.Control
 					type='email'
 					placeholder='Enter email'
@@ -56,7 +60,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 				/>
 			</Form.Group>
 
-			<Form.Group controlId='formBasicPassword'>
+			<Form.Group controlId='formBasicPassword' className={classes.SigninField}>
 				<Form.Label>Password</Form.Label>
 				<Form.Control
 					type='password'
@@ -95,7 +99,10 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 		</Form>
 	) : (
 		<Form>
-			<Form.Group controlId='formBasicEmail'>
+			<div className={classes.FormTitle}>
+				<label>REGISTER</label>
+			</div>
+			<Form.Group controlId='formBasicEmail' className={classes.SigninField}>
 				<Form.Label>First name</Form.Label>
 				<Form.Control
 					type='firstname'
@@ -103,7 +110,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 					onChange={(event) => onSignUpFormChange(event, 'firstName')}
 				/>
 			</Form.Group>
-			<Form.Group controlId='formBasicEmail'>
+			<Form.Group controlId='formBasicEmail' className={classes.SigninField}>
 				<Form.Label>Last name</Form.Label>
 				<Form.Control
 					type='lastname'
@@ -111,7 +118,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 					onChange={(event) => onSignUpFormChange(event, 'lastName')}
 				/>
 			</Form.Group>
-			<Form.Group controlId='formBasicEmail'>
+			<Form.Group controlId='formBasicEmail' className={classes.SigninField}>
 				<Form.Label>Email address</Form.Label>
 				<Form.Control
 					type='email'
@@ -119,16 +126,16 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 					onChange={(event) => onSignUpFormChange(event, 'emailAddress')}
 				/>
 			</Form.Group>
-			<Form.Group controlId='formBasicPassword'>
-				<Form.Label>Choose a password</Form.Label>
+			<Form.Group controlId='formBasicPassword' className={classes.SigninField}>
+				<Form.Label>Password</Form.Label>
 				<Form.Control
 					type='password'
 					placeholder='Password'
 					onChange={(event) => onSignUpFormChange(event, 'password')}
 				/>
 			</Form.Group>
-			<Form.Group controlId='formRepeatPassword'>
-				<Form.Label>Repeat your password</Form.Label>
+			<Form.Group controlId='formRepeatPassword' className={classes.SigninField}>
+				<Form.Label>Repeat password</Form.Label>
 				<Form.Control
 					type='password'
 					placeholder='Reapeat password'
@@ -146,7 +153,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 				Sign up
 			</Button>
 			<Form.Text className='text-muted'>
-				Don't have an account?{' '}
+				Already have an account?{' '}
 				<a
 					onClick={() => {
 						setIsLogin(true);

@@ -161,4 +161,37 @@ router.route('/update/:id').post((req, res) => {
 		.catch((err) => res.status(400).json('Error: ' + err));
 });
 
+const filterParseToQuery = (details, namePath = null) => {
+	let queryArray = [];
+	Object.keys(details).map((key) => {
+		const detailValue = details[key];
+		const detailName = namePath ? namePath + '.' + key : key;
+		if (typeof detailValue === 'object') {
+			if ('length' in detailValue && detailValue.length !== 0) {
+				queryArray.push({ [detailName]: detailValue });
+			} else {
+				queryArray = queryArray.concat(filterParseToQuery(detailValue, detailName));
+			}
+		} else if (typeof detailValue === 'boolean') {
+			queryArray.push(
+				detailValue ? { [detailName]: true } : { $or: [{ [detailName]: true }, { [detailName]: false }] }
+			);
+		} else if (typeof detailValue === 'number') {
+			queryArray.push({ [detailName]: { $gte: detailValue } });
+		} else if (typeof detailValue === 'string' && detailValue !== '') {
+			queryArray.push({ [detailName]: detailValue });
+		}
+	});
+	return queryArray;
+};
+
+router.route('/filter').post((req, res) => {
+	const query = {
+		$and: filterParseToQuery(req.body),
+	};
+	RestaurantDetails.find(query, '_id')
+		.then((restaurantDetails) => res.json(restaurantDetails))
+		.catch((err) => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;

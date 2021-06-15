@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import * as classes from './RestaurantFilter.module.css';
 import * as actions from '../../store/actions/index';
 import * as consts from '../../shared/consts';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import { copyObject } from '../../shared/utility';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -13,6 +16,9 @@ import CuisineDropdown from '../../components/CuisineDropdown/CuisineDropdown';
 import { NavLink } from 'react-router-dom';
 import ActiveTagSection from '../../components/ActiveTagSection/ActiveTagSection';
 import GoogleMap from '../Map/Map';
+import AreaSearch from '../../components/AreaSearch/AreaSearch';
+import DetailsFilter from '../../components/DetailsFilter/DetailsFilter';
+import ItemsPaginated from '../../components/ItemsPaginated/ItemsPaginated';
 
 const RestaurantFilter = ({
 	restaurants,
@@ -101,16 +107,33 @@ const RestaurantFilter = ({
 	));
 
 	return (
-		<div>
-			<br />
-			<SearchBar value={searchValue} onChange={setSearchValue} />
-			<OrderByDropdown onSelect={orderSelectHandler} />
-			<Slider priceMin={priceRange[0]} priceMax={priceRange[1]} setPrices={setPricesHandler} />
-			<CuisineDropdown show clicked={cuisineChangeHandler} />
-			<ActiveTagSection search={searchValue} setSearch={setSearchValue} />
-			<br />
-			<div className={classes.Restaurants}>{restaurantCards}</div>
-			<GoogleMap items={filteredRestaurants} />
+		<div className='w-100'>
+			<Container className='mw-100'>
+				<Row>
+					<div>
+						<AreaSearch />
+						<SearchBar value={searchValue} onChange={setSearchValue} />
+						<OrderByDropdown onSelect={orderSelectHandler} />
+						<Slider priceMin={priceRange[0]} priceMax={priceRange[1]} setPrices={setPricesHandler} />
+						<CuisineDropdown show clicked={cuisineChangeHandler} />
+						<DetailsFilter />
+					</div>
+					<ActiveTagSection search={searchValue} setSearch={setSearchValue} />
+				</Row>
+				<Row>
+					<Col xs={6} md={6}>
+						<ItemsPaginated
+							items={restaurantCards}
+							itemsPerPage={5}
+							containerStyle={classes.RestaurantCardContainer}
+							paginationControlsStyle={classes.RestaurantCardPagination}
+						/>
+					</Col>
+					<Col xs={6} md={6}>
+						<GoogleMap items={filteredRestaurants} mapStyle={{ height: '60vh', borderRadius: '5px' }} />
+					</Col>
+				</Row>
+			</Container>
 		</div>
 	);
 };

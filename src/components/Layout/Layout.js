@@ -8,14 +8,14 @@ import Col from 'react-bootstrap/Col';
 
 const Layout = (props) => {
 	return (
-		<Container className={classes.Layout}>
+		<div className={classes.Layout}>
 			<Row>
 				<Col>
 					<Navigation />
 				</Col>
 			</Row>
 			<Row>{props.children}</Row>
-		</Container>
+		</div>
 	);
 };
 

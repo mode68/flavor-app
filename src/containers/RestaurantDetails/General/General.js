@@ -8,12 +8,13 @@ import Table from 'react-bootstrap/Table';
 import BooleanDisplay from '../../../components/BooleanDisplay/BooleanDisplay';
 import WorkHoursDisplay from '../../../components/WorkHoursDisplay/WorkHoursDisplay';
 
-const General = ({ restaurant, restaurantDetails, onGetRestaurantDetailsById }) => {
+const General = ({ restaurant, restaurantDetails, onGetRestaurantDetailsById, onGetRestaurantById }) => {
 	const { id } = useParams();
 
 	useEffect(() => {
 		onGetRestaurantDetailsById(id);
-	}, [onGetRestaurantDetailsById]);
+		onGetRestaurantById(id);
+	}, [onGetRestaurantDetailsById, onGetRestaurantById]);
 
 	return restaurantDetails && restaurant ? (
 		<div>
@@ -254,6 +255,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetRestaurantDetailsById: (id) => dispatch(actions.getRestaurantDetailsById(id)),
+		onGetRestaurantById: (id) => dispatch(actions.getRestaurantById(id)),
 	};
 };
 

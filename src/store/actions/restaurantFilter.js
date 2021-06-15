@@ -85,3 +85,46 @@ export const getRestaurantDetailsById = (id) => {
 			});
 	};
 };
+
+export const addReview = (review) => {
+	return (dispatch) => {
+		axios({ method: 'post', url: '/reviews/add', data: review, withCredentials: true })
+			.then((response) => {
+				dispatch({
+					type: actionTypes.ADD_REVIEW,
+					payload: response.data,
+				});
+			})
+			.catch((err) => dispatch({ type: actionTypes.SET_ERROR, payload: err }));
+	};
+};
+
+export const getReviewsById = (id) => {
+	return (dispatch) => {
+		axios
+			.get('/reviews/' + id)
+			.then((response) => {
+				dispatch({
+					type: actionTypes.GET_REVIEWS_BY_ID,
+					payload: response.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({ type: actionTypes.SET_ERROR, payload: err });
+			});
+	};
+};
+
+export const setDetailsFilter = (detailsFilter) => {
+	return (dispatch) => {
+		axios({ method: 'post', url: '/restaurantDetails/filter', data: detailsFilter })
+			.then((response) => {
+				dispatch({
+					type: actionTypes.FILTER_BY_DETAILS,
+				});
+				console.log(response);
+				// call here - get restaurants by id-array. response.data = [...]
+			})
+			.catch((err) => dispatch({ type: actionTypes.SET_ERROR, payload: err }));
+	};
+};

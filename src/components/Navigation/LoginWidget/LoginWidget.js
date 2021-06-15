@@ -4,12 +4,26 @@ import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
+import Modal from '../../Modal/Modal';
+import LoginForm from '../../../containers/LoginForm/LoginForm';
 
 const LoginWidget = ({ authenticated, user, onUserLogout, onIsAuthenticated }) => {
+	const [showLoginForm, setShowLoginForm] = useState(false);
 	const [isAuth, setIsAuth] = useState(false);
+
 	useEffect(() => {
 		onIsAuthenticated();
 	}, [onIsAuthenticated]);
+
+	useEffect(() => {
+		if (showLoginForm && authenticated) {
+			setShowLoginForm(false);
+		}
+	}, [authenticated]);
+
+	const onModalClosed = () => {
+		setShowLoginForm(false);
+	};
 
 	return (
 		<div>
@@ -24,9 +38,22 @@ const LoginWidget = ({ authenticated, user, onUserLogout, onIsAuthenticated }) =
 				</div>
 			) : (
 				<Nav.Item>
-					<NavLink to='/login'>Login</NavLink>
+					{/* <NavLink to='/login'>SIGN IN</NavLink> */}
+					<Button
+						variant='outline-primary'
+						onClick={() => {
+							setShowLoginForm(true);
+						}}
+					>
+						SIGN IN
+					</Button>
 				</Nav.Item>
 			)}
+			{showLoginForm ? (
+				<Modal show={showLoginForm} modalClosed={onModalClosed}>
+					<LoginForm />
+				</Modal>
+			) : null}
 		</div>
 	);
 };

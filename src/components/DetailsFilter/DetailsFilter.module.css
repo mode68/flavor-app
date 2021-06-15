@@ -1,0 +1,54 @@
+.Dropdown {
+	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 5px;
+	padding: 10px;
+	text-align: left;
+	width: 60vh;
+	position: absolute;
+	z-index: 100;
+	background-color: white;
+	height: 60vh;
+	overflow: auto;
+}
+
+.CategoryTitle {
+	width: 100%;
+	font-size: 20px;
+	background-color: aliceblue;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.DetailsButtons {
+	position: sticky;
+	top: 0;
+	z-index: 200;
+}
+.DetailsRow {
+	padding-left: 15px;
+}
+.DetailsRow:hover {
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+}
+
+.NameColumn {
+	width: 35%;
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+}
+
+.ValueColumn {
+	width: 65%;
+	display: inline-block;
+}
+
+.Chips {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.Chip {
+	margin: 2;
+}

@@ -1,0 +1,45 @@
+.RatingTool {
+	width: 195px;
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid rgb(164, 164, 253);
+	border-radius: 5px;
+}
+
+.RatingTool:hover {
+	background-color: aliceblue;
+}
+
+.FormControl {
+	width: 60px;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.StarRating {
+	color: #ffd700;
+}
+
+.RatingPanel {
+	position: absolute;
+	z-index: 100;
+}
+
+.Panel {
+	border: 1px solid #adadff;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: aliceblue;
+	width: 185px;
+}
+
+.ArrowUp {
+	width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #adadff;
+	margin: 0 auto;
+	margin-top: 10px;
+}
