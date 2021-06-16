@@ -1,4 +1,5 @@
 const router = require('express').Router();
+let mongoose = require('mongoose');
 let Restaurant = require('../models/restaurant.model');
 
 router.route('/').get((req, res) => {
@@ -64,6 +65,14 @@ router.route('/set/:id').post((req, res) => {
 router.route('/update/:id').post((req, res) => {
 	Restaurant.findByIdAndUpdate(req.params.id, req.body)
 		.then(() => res.json('Restaurant was updated!'))
+		.catch((err) => res.status(400).json('Error: ' + err));
+});
+
+router.route('/getMultipleByIdArray').post((req, res) => {
+	Restaurant.find({
+		_id: { $in: req.body },
+	})
+		.then((restaurants) => res.json(restaurants))
 		.catch((err) => res.status(400).json('Error: ' + err));
 });
 

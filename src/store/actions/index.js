@@ -9,6 +9,7 @@ export {
 	addReview,
 	getReviewsById,
 	setDetailsFilter,
+	getRestaurantsByIdArray,
 } from './restaurantFilter';
 
 export { addUser, loginUser, logoutUser, clearAuthError, isAuthenticated } from './authentication';

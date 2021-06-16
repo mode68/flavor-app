@@ -23,7 +23,6 @@ export const initRestaurants = () => {
 	};
 };
 
-// TODO: remake into using redux loading state
 export const getRestaurantById = (id) => {
 	return (dispatch) => {
 		axios
@@ -31,6 +30,21 @@ export const getRestaurantById = (id) => {
 			.then((response) => {
 				dispatch({
 					type: actionTypes.GET_RESTAURANT_BY_ID,
+					payload: response.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({ type: actionTypes.SET_ERROR, payload: err });
+			});
+	};
+};
+
+export const getRestaurantsByIdArray = (idArray) => {
+	return (dispatch) => {
+		axios({ method: 'post', url: '/restaurants/getMultipleByIdArray', data: idArray })
+			.then((response) => {
+				dispatch({
+					type: actionTypes.GET_RESTAURANTS_BY_ID_ARRAY,
 					payload: response.data,
 				});
 			})
@@ -122,8 +136,7 @@ export const setDetailsFilter = (detailsFilter) => {
 				dispatch({
 					type: actionTypes.FILTER_BY_DETAILS,
 				});
-				console.log(response);
-				// call here - get restaurants by id-array. response.data = [...]
+				return dispatch(getRestaurantsByIdArray(response.data));
 			})
 			.catch((err) => dispatch({ type: actionTypes.SET_ERROR, payload: err }));
 	};

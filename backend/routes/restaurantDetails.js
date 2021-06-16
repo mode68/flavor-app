@@ -167,15 +167,15 @@ const filterParseToQuery = (details, namePath = null) => {
 		const detailValue = details[key];
 		const detailName = namePath ? namePath + '.' + key : key;
 		if (typeof detailValue === 'object') {
-			if ('length' in detailValue && detailValue.length !== 0) {
-				queryArray.push({ [detailName]: detailValue });
+			if ('length' in detailValue) {
+				if (detailValue.length !== 0) {
+					queryArray.push({ [detailName]: detailValue });
+				}
 			} else {
 				queryArray = queryArray.concat(filterParseToQuery(detailValue, detailName));
 			}
-		} else if (typeof detailValue === 'boolean') {
-			queryArray.push(
-				detailValue ? { [detailName]: true } : { $or: [{ [detailName]: true }, { [detailName]: false }] }
-			);
+		} else if (typeof detailValue === 'boolean' && detailValue) {
+			queryArray.push({ [detailName]: true });
 		} else if (typeof detailValue === 'number') {
 			queryArray.push({ [detailName]: { $gte: detailValue } });
 		} else if (typeof detailValue === 'string' && detailValue !== '') {

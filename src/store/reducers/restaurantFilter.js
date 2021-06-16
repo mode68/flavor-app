@@ -61,6 +61,10 @@ const getReviewsById = (state, action) => {
 	return { ...state, reviews: action.payload };
 };
 
+const getRestaurantsByIdArray = (state, action) => {
+	return { ...state, restaurants: action.payload };
+};
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.INIT_RESTAURANTS:
@@ -81,10 +85,12 @@ const reducer = (state = initialState, action) => {
 			return getReviewsById(state, action);
 		case actionTypes.FILTER_BY_DETAILS:
 			return filterByDetails(state, action);
-		case actionTypes.SET_ERROR:
-			return setError(state, action);
 		case actionTypes.GET_RESTAURANT_DETAILS_BY_ID:
 			return getRestaurantDetailsById(state, action);
+		case actionTypes.GET_RESTAURANTS_BY_ID_ARRAY:
+			return getRestaurantsByIdArray(state, action);
+		case actionTypes.SET_ERROR:
+			return setError(state, action);
 		default:
 			return state;
 	}
