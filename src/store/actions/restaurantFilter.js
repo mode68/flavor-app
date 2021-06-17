@@ -135,6 +135,7 @@ export const setDetailsFilter = (detailsFilter) => {
 			.then((response) => {
 				dispatch({
 					type: actionTypes.FILTER_BY_DETAILS,
+					payload: detailsFilter,
 				});
 				return dispatch(getRestaurantsByIdArray(response.data));
 			})

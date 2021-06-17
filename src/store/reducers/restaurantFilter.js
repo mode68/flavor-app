@@ -54,7 +54,7 @@ const addReview = (state, action) => {
 };
 
 const filterByDetails = (state, action) => {
-	return state;
+	return { ...state, detailsFilter: action.payload };
 };
 
 const getReviewsById = (state, action) => {

@@ -21,7 +21,7 @@ const RestaurantCard = (props) => {
 									<img
 										className={classes.RestaurantCardImage}
 										src={RestaurantPlaceholderImg}
-										alt='Card image cap'
+										alt='Restaurant'
 									/>
 								</div>
 								<div className='card-body'>

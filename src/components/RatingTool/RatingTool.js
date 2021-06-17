@@ -18,7 +18,7 @@ const useOutsideClick = (ref, onClick) => {
 			// Unbind the event listener on clean up
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [ref]);
+	}, [ref, onClick]);
 };
 
 const RatingTool = ({ categoryName, value, onChange }) => {
@@ -53,7 +53,6 @@ const RatingTool = ({ categoryName, value, onChange }) => {
 							value={value}
 							onChange={onChange}
 							aria-labelledby='discrete-slider'
-							valueLabelDisplay='auto'
 							step={0.1}
 							min={0}
 							max={5}

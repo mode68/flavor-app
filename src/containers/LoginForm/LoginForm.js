@@ -27,7 +27,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 		if (authenticated) {
 			history.push('/');
 		}
-	}, [authenticated]);
+	}, [authenticated, history]);
 
 	const onLoginFormChange = (event, fieldName, checkbox = false) => {
 		const updatedLoginForm = { ...loginForm };
@@ -89,6 +89,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 			<Form.Text className='text-muted'>
 				Don't have an account?{' '}
 				<a
+					href='#0'
 					onClick={() => {
 						setIsLogin(false);
 					}}
@@ -155,6 +156,7 @@ const LoginForm = ({ onAddUser, onUserLogin, authenticated, error, onClearError 
 			<Form.Text className='text-muted'>
 				Already have an account?{' '}
 				<a
+					href='#0'
 					onClick={() => {
 						setIsLogin(true);
 					}}

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/Spinner/Spinner';
-import * as classes from './General.module.css';
 import Table from 'react-bootstrap/Table';
 import BooleanDisplay from '../../../components/BooleanDisplay/BooleanDisplay';
 import WorkHoursDisplay from '../../../components/WorkHoursDisplay/WorkHoursDisplay';
@@ -14,7 +13,7 @@ const General = ({ restaurant, restaurantDetails, onGetRestaurantDetailsById, on
 	useEffect(() => {
 		onGetRestaurantDetailsById(id);
 		onGetRestaurantById(id);
-	}, [onGetRestaurantDetailsById, onGetRestaurantById]);
+	}, [onGetRestaurantDetailsById, onGetRestaurantById, id]);
 
 	return restaurantDetails && restaurant ? (
 		<div>

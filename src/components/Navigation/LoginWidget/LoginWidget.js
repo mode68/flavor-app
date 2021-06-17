@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as actions from '../../../store/actions/index';
 import Nav from 'react-bootstrap/Nav';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from '../../Modal/Modal';
@@ -9,7 +8,6 @@ import LoginForm from '../../../containers/LoginForm/LoginForm';
 
 const LoginWidget = ({ authenticated, user, onUserLogout, onIsAuthenticated }) => {
 	const [showLoginForm, setShowLoginForm] = useState(false);
-	const [isAuth, setIsAuth] = useState(false);
 
 	useEffect(() => {
 		onIsAuthenticated();
@@ -19,7 +17,7 @@ const LoginWidget = ({ authenticated, user, onUserLogout, onIsAuthenticated }) =
 		if (showLoginForm && authenticated) {
 			setShowLoginForm(false);
 		}
-	}, [authenticated]);
+	}, [authenticated, showLoginForm]);
 
 	const onModalClosed = () => {
 		setShowLoginForm(false);

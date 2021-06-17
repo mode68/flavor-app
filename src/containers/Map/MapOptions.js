@@ -1,4 +1,4 @@
-export default [
+const mapOptions = [
 	{
 		featureType: 'all',
 		elementType: 'geometry.fill',
@@ -261,3 +261,5 @@ export default [
 		],
 	},
 ];
+
+export default mapOptions;

@@ -6,7 +6,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import RatingTool from '../../../components/RatingTool/RatingTool';
 import * as consts from '../../../shared/consts';
-import * as classes from './Reviews.module.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -52,7 +51,7 @@ const Reviews = ({ restaurant, reviews, user, authenticated, onAddReview, onGetR
 
 	useEffect(() => {
 		onGetReviewsById(id);
-	}, [onGetReviewsById]);
+	}, [onGetReviewsById, id]);
 
 	const ratingToolArray = Object.keys(scores).map((key, index) => (
 		<RatingTool

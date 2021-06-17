@@ -4,11 +4,6 @@ import Spinner from '../../components/Spinner/Spinner';
 import mapStyles from './MapOptions';
 import CustomInfoWindow from './CustomInfoWindow';
 
-const mapContainerStyle = {
-	width: '500px',
-	height: '500px',
-};
-
 const center = {
 	lat: 54.6870458,
 	lng: 25.2829111,

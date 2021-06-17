@@ -13,20 +13,20 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import { copyObject } from '../../shared/utility';
 
-const DetailsFilter = ({ onSetDetailsFilter }) => {
+const DetailsFilter = ({ onSetDetailsFilter, detailsFilter }) => {
 	const [show, setShow] = useState(false);
 	const [value, setValue] = useState(consts.stateValueMap);
 
 	useEffect(() => {
-		if (!show) {
-			console.log(value);
+		if (JSON.stringify(detailsFilter) !== JSON.stringify(value)) {
+			setValue(detailsFilter);
 		}
-	}, [show]);
+	}, [detailsFilter]);
 
-	const parseDetailsFilterMap = (object) => {
+	const parseDetailsFilterMap = (object, key) => {
 		const controlWrapper = (displayName, wrapperContent) => {
 			return (
-				<div className={classes.DetailsRow}>
+				<div className={classes.DetailsRow} key={key}>
 					<div className={classes.NameColumn}>{displayName}</div>
 					<div className={classes.ValueColumn}>{wrapperContent}</div>
 				</div>
@@ -83,7 +83,6 @@ const DetailsFilter = ({ onSetDetailsFilter }) => {
 								multiple
 								value={value[object.valuePropName]}
 								onChange={(e) => {
-									console.log(e);
 									let updatedValue = copyObject(value);
 									updatedValue[object.valuePropName] = e.target.value;
 									setValue(updatedValue);
@@ -128,17 +127,20 @@ const DetailsFilter = ({ onSetDetailsFilter }) => {
 						))
 					);
 				}
+				break;
+			default:
+				return null;
 		}
 	};
 
-	const detailsFilter = Object.keys(consts.detailsFilterMap).map((key) => {
+	const detailsFilterItems = Object.keys(consts.detailsFilterMap).map((key) => {
 		let children = null;
 		if (consts.detailsFilterMap[key].children) {
 			children = Object.keys(consts.detailsFilterMap[key].children).map((childKey) =>
-				parseDetailsFilterMap(consts.detailsFilterMap[key].children[childKey])
+				parseDetailsFilterMap(consts.detailsFilterMap[key].children[childKey], childKey)
 			);
 		}
-		let parent = parseDetailsFilterMap(consts.detailsFilterMap[key]);
+		let parent = parseDetailsFilterMap(consts.detailsFilterMap[key], key);
 		return [parent, ...children];
 	});
 
@@ -163,7 +165,7 @@ const DetailsFilter = ({ onSetDetailsFilter }) => {
 						</Button>
 					</div>
 					<div>
-						<div>{detailsFilter}</div>
+						<div>{detailsFilterItems}</div>
 					</div>
 				</div>
 			) : null}
@@ -172,7 +174,9 @@ const DetailsFilter = ({ onSetDetailsFilter }) => {
 };
 
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		detailsFilter: state.restaurantFilter.detailsFilter,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
